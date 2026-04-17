@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id          String   @id @default(uuid())
+  patientName String
+  email       String
+  phone       String
+  date        String   // Format: YYYY-MM-DD
+  timeSlot    String   // Format: HH:MM
+  reason      String?
+  status      String   @default("CONFIRMED")
+  createdAt   DateTime @default(now())
+
+  @@unique([date, timeSlot])
+}
+
+model ContactInquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
